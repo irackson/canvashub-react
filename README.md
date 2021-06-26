@@ -1,8 +1,8 @@
-# CanvasHub (React Frontend) wakatime
+# CanvasHub (React Frontend) [![wakatime](https://wakatime.com/badge/github/irackson/canvashub-react.svg)](https://wakatime.com/badge/github/irackson/canvashub-react)
 
 ## Frontend URLS
 
--   netlify
+-   [netlify](https://laughing-johnson-bfde47.netlify.app/)
 -   <https://canvashub.ianrackson.com/>
 
 ## Backend URLS
