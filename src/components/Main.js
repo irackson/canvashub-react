@@ -29,31 +29,32 @@ export default function Main(props) {
                     <Route
                         exact
                         path="/"
-                        render={(props) => <Home {...props} />}
+                        render={(rp) => <Home {...rp} />}
                     ></Route>
                     <Route
                         path="/drawings"
                         exact
-                        render={(props) => (
+                        render={(rp) => (
                             <DrawingIndex
-                                {...props}
+                                {...rp}
                                 isLoaded={indexData.isLoaded}
                                 allDrawings={indexData.all_drawings}
+                                latestVersions={indexData.latest_versions}
                             />
                         )}
                     ></Route>
                     <Route
                         path="/drawings/create"
-                        render={(props) => <DrawingCreate {...props} />}
-                    ></Route>
-                    <Route
-                        path="/drawings/:id"
-                        render={(props) => <DrawingShow {...props} />}
+                        render={(rp) => <DrawingCreate {...rp} />}
                     ></Route>
                     <Route
                         path="/drawings/:id/edit"
                         exact
-                        render={(props) => <DrawingEdit {...props} />}
+                        render={(rp) => <DrawingEdit {...rp} />}
+                    ></Route>
+                    <Route
+                        path="/drawings/:id"
+                        render={(rp) => <DrawingShow {...rp} />}
                     ></Route>
 
                     <Route render={() => <Redirect to="/" />} />
