@@ -18,7 +18,13 @@ export default function Main(props) {
 
     const deleteRepo = async (id) => {
         const status = await fetchDrawingDelete(id);
-        getIndexData();
+        console.log('status: ', status);
+        if (status !== 409) {
+            getIndexData();
+        }
+        return new Promise(function (myResolve) {
+            myResolve(status);
+        });
     };
 
     useEffect(() => {

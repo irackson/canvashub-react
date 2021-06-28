@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 const DrawingShow = (props) => {
     const [showData, setShowData] = useState({ isLoaded: false });
+    const [removable, setRemovable] = useState(true);
     const getShowData = async () => {
         setShowData({
             ...(await fetchDrawingById(props.match.params.id)),
@@ -16,6 +17,17 @@ const DrawingShow = (props) => {
         getShowData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const processDelete = async (event) => {
+        event.preventDefault();
+        const status = await props.deleteRepo(showData.id);
+        if (status !== 409) {
+            setRemovable(true);
+            props.history.push('/drawings');
+        } else {
+            setRemovable(false);
+        }
+    };
 
     const loaded = () => {
         return (
@@ -34,14 +46,19 @@ const DrawingShow = (props) => {
                             </h4>
                             <h6>
                                 <button
+                                    disabled={!removable}
                                     onClick={(event) => {
-                                        props.deleteRepo(showData.id);
-                                        props.history.push('/drawings');
+                                        processDelete(event);
                                     }}
                                 >
                                     or delete repository
                                 </button>
                             </h6>
+                            {!removable ? (
+                                <em>
+                                    repos older than 5000s cannot be deleted{' '}
+                                </em>
+                            ) : null}
                         </div>
                         <DrawingSlideshow
                             className="slideshow"
@@ -64,14 +81,17 @@ const DrawingShow = (props) => {
                         </h4>
                         <h6>
                             <button
+                                disabled={!removable}
                                 onClick={(event) => {
-                                    props.deleteRepo(showData.id);
-                                    props.history.push('/drawings');
+                                    processDelete(event);
                                 }}
                             >
                                 or delete repository
                             </button>
                         </h6>
+                        {!removable ? (
+                            <em>repos older than 5000s cannot be deleted </em>
+                        ) : null}
                         <h6>
                             width: {showData.width}px, height: {showData.height}
                             px
