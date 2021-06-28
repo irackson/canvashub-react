@@ -89,7 +89,7 @@ export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
     });
 };
 
-export const fetchDrawingCheckOut = async (id) => {
+/* export const fetchDrawingCheckOut = async (id) => {
     const response = await fetch(`${apiRoute}/drawings/${id}`, {
         method: 'PATCH',
         headers: {
@@ -119,7 +119,7 @@ export const fetchDrawingCheckIn = async (id) => {
     return new Promise(function (myResolve) {
         myResolve(status);
     });
-};
+}; */
 
 export const fetchImageCreate = async (drawingId, clampedArray) => {
     const newImage = {

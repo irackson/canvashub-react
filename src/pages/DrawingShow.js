@@ -20,26 +20,38 @@ const DrawingShow = (props) => {
     const loaded = () => {
         return (
             <div className="drawing-show">
-                <div className="drawing-show__info-edit">
-                    <h2>{showData.title}</h2>
-                    <h3>By {showData.creator}</h3>
-                    <h4>
-                        <Link to={`/drawings/${props.match.params.id}/edit`}>
-                            Edit (new commit)
-                        </Link>
-                    </h4>
-                </div>
                 {showData.images.length > 0 ? (
-                    <DrawingSlideshow
-                        className="slideshow"
-                        images={showData.images}
-                        height={showData.height}
-                        width={showData.width}
-                        id={props.match.params.id}
-                    ></DrawingSlideshow>
+                    <>
+                        <div className="drawing-show__info-edit">
+                            <h2>{showData.title}</h2>
+                            <h3>By {showData.creator}</h3>
+                            <h4>
+                                <Link
+                                    to={`/drawings/${props.match.params.id}/edit`}
+                                >
+                                    Edit (new commit)
+                                </Link>
+                            </h4>
+                        </div>
+                        <DrawingSlideshow
+                            className="slideshow"
+                            images={showData.images}
+                            height={showData.height}
+                            width={showData.width}
+                            id={props.match.params.id}
+                        ></DrawingSlideshow>
+                    </>
                 ) : (
-                    <div>
-                        <h5>create the first commit!</h5>
+                    <div className="drawing-show__info-edit">
+                        <h2>{showData.title}</h2>
+                        <h3>By {showData.creator}</h3>
+                        <h4>
+                            <Link
+                                to={`/drawings/${props.match.params.id}/edit`}
+                            >
+                                Create First Commit
+                            </Link>
+                        </h4>
                         <h6>
                             width: {showData.width}px, height: {showData.height}
                             px
