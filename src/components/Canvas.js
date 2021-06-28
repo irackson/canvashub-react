@@ -9,7 +9,8 @@ const Canvas = (props) => {
         // (props.width * props.height * 4)
         let imageData = new ImageData(arr, props.width);
         context.putImageData(imageData, 0, 0);
-    }, [props.bytes]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.bytes]); // TODO: consider dependencies
     return <canvas ref={canvasRef} {...props}></canvas>;
 };
 

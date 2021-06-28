@@ -9,7 +9,7 @@ const DrawingIndex = (props) => {
                     <DrawingPreview
                         key={drawing.id}
                         drawing={drawing}
-                        latestVersion={props.latestVersions.find(
+                        image={props.latestVersions.find(
                             (v) => v?.drawing_id === drawing.id
                         )}
                     ></DrawingPreview>
