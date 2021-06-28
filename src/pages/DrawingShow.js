@@ -2,15 +2,32 @@ import DrawingSlideshow from 'components/DrawingSlideshow';
 import { fetchDrawingById } from 'utils/api';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+const MIN_TIME = process.env.REACT_APP_DELETE_MIN_TIME * 60 * 1000;
+const MIN_NUM = process.env.REACT_APP_DELETE_MIN_NUM;
 
 const DrawingShow = (props) => {
     const [showData, setShowData] = useState({ isLoaded: false });
-    const [removable, setRemovable] = useState(true);
+    const [removable, setRemovable] = useState(null);
     const getShowData = async () => {
+        const drawing = await fetchDrawingById(props.match.params.id);
+        await getRemovableStatus(drawing);
         setShowData({
-            ...(await fetchDrawingById(props.match.params.id)),
+            ...drawing,
             isLoaded: true,
         });
+    };
+
+    const getRemovableStatus = async (drawing) => {
+        console.log(new Date() - new Date(drawing.updated_at));
+        if (
+            drawing.images.length <= parseInt(MIN_NUM) ||
+            (drawing.images.length > parseInt(MIN_NUM) &&
+                new Date() - new Date(drawing.updated_at) >= parseInt(MIN_TIME))
+        ) {
+            setRemovable(true);
+        } else {
+            setRemovable(false);
+        }
     };
 
     useEffect(() => {
@@ -44,6 +61,7 @@ const DrawingShow = (props) => {
                                     Edit (new commit)
                                 </Link>
                             </h4>
+                            {/* TODO: refactor (not dry) */}
                             <h6>
                                 <button
                                     disabled={!removable}
@@ -55,9 +73,16 @@ const DrawingShow = (props) => {
                                 </button>
                             </h6>
                             {!removable ? (
-                                <em>
-                                    repos older than 5000s cannot be deleted{' '}
-                                </em>
+                                <h6>
+                                    <em>
+                                        repos with more than than {MIN_NUM}{' '}
+                                        commits, or those with more than{' '}
+                                        {MIN_NUM} that have been updated within
+                                        the last{' '}
+                                        {Math.floor(MIN_TIME / 60 / 1000)}{' '}
+                                        minutes cannot be deleted
+                                    </em>
+                                </h6>
                             ) : null}
                         </div>
                         <DrawingSlideshow
@@ -79,6 +104,7 @@ const DrawingShow = (props) => {
                                 Create First Commit
                             </Link>
                         </h4>
+                        {/* TODO: refactor (not dry) */}
                         <h6>
                             <button
                                 disabled={!removable}
@@ -90,7 +116,15 @@ const DrawingShow = (props) => {
                             </button>
                         </h6>
                         {!removable ? (
-                            <em>repos older than 5000s cannot be deleted </em>
+                            <h6>
+                                <em>
+                                    repos with more than than {MIN_NUM} commits,
+                                    or those with more than {MIN_NUM} that have
+                                    been updated within the last{' '}
+                                    {Math.floor(MIN_TIME / 60 / 1000)} minutes
+                                    cannot be deleted
+                                </em>
+                            </h6>
                         ) : null}
                         <h6>
                             width: {showData.width}px, height: {showData.height}
