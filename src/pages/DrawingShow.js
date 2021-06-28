@@ -32,6 +32,16 @@ const DrawingShow = (props) => {
                                     Edit (new commit)
                                 </Link>
                             </h4>
+                            <h6>
+                                <button
+                                    onClick={(event) => {
+                                        props.deleteRepo(showData.id);
+                                        props.history.push('/drawings');
+                                    }}
+                                >
+                                    or delete repository
+                                </button>
+                            </h6>
                         </div>
                         <DrawingSlideshow
                             className="slideshow"
@@ -52,6 +62,16 @@ const DrawingShow = (props) => {
                                 Create First Commit
                             </Link>
                         </h4>
+                        <h6>
+                            <button
+                                onClick={(event) => {
+                                    props.deleteRepo(showData.id);
+                                    props.history.push('/drawings');
+                                }}
+                            >
+                                or delete repository
+                            </button>
+                        </h6>
                         <h6>
                             width: {showData.width}px, height: {showData.height}
                             px

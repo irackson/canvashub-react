@@ -6,7 +6,7 @@ import DrawingCreate from 'pages/DrawingCreate';
 import DrawingShow from 'pages/DrawingShow';
 import DrawingEdit from 'pages/DrawingEdit';
 import Home from 'pages/Home';
-import { fetchDrawingsIndex } from 'utils/api';
+import { fetchDrawingsIndex, fetchDrawingDelete } from 'utils/api';
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -14,6 +14,11 @@ export default function Main(props) {
     const [indexData, setIndexData] = useState({ isLoaded: false });
     const getIndexData = async () => {
         setIndexData({ ...(await fetchDrawingsIndex()), isLoaded: true });
+    };
+
+    const deleteRepo = async (id) => {
+        const status = await fetchDrawingDelete(id);
+        getIndexData();
     };
 
     useEffect(() => {
@@ -54,7 +59,9 @@ export default function Main(props) {
                     ></Route>
                     <Route
                         path="/drawings/:id"
-                        render={(rp) => <DrawingShow {...rp} />}
+                        render={(rp) => (
+                            <DrawingShow {...rp} deleteRepo={deleteRepo} />
+                        )}
                     ></Route>
 
                     <Route render={() => <Redirect to="/" />} />

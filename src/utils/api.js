@@ -66,14 +66,14 @@ export const fetchDrawingDelete = async (id) => {
     };
 
     const response = await fetch(`${apiRoute}/drawings/${id}`, requestOptions);
-    const status = await response.status();
+    const status = await response.status;
 
     return new Promise(function (myResolve) {
         myResolve(status);
     });
 };
 
-export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
+/* export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
     const response = await fetch(`${apiRoute}/drawings/${id}`, {
         method: 'PATCH',
         headers: {
@@ -87,7 +87,7 @@ export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
     return new Promise(function (myResolve) {
         myResolve(data);
     });
-};
+}; */
 
 /* export const fetchDrawingCheckOut = async (id) => {
     const response = await fetch(`${apiRoute}/drawings/${id}`, {
@@ -98,7 +98,7 @@ export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
         body: JSON.stringify({ checked_out: true }),
     });
 
-    const status = await response.status();
+    const status = await response.status;
 
     return new Promise(function (myResolve) {
         myResolve(status);
@@ -114,7 +114,7 @@ export const fetchDrawingCheckIn = async (id) => {
         body: JSON.stringify({ checked_out: false }),
     });
 
-    const status = await response.status();
+    const status = await response.status;
 
     return new Promise(function (myResolve) {
         myResolve(status);
