@@ -27,14 +27,14 @@ const DrawingEdit = (props) => {
                 >
                     {latestVersion ? (
                         <ImageCreate
-                            width={drawing.width}
-                            height={drawing.height}
+                            width={parseInt(drawing.width)}
+                            height={parseInt(drawing.height)}
                             baseArray={latestVersion.bytes}
                         ></ImageCreate>
                     ) : (
                         <ImageCreate
-                            width={drawing.width}
-                            height={drawing.height}
+                            width={parseInt(drawing.width)}
+                            height={parseInt(drawing.height)}
                         ></ImageCreate>
                     )}
                 </div>

@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { render } from 'react-dom';
-import { Stage, Layer, Line, Text } from 'react-konva';
+import { Stage, Layer, Line, Text, Shape } from 'react-konva';
 
 const ImageCreate = (props) => {
     const [tool, setTool] = React.useState('pen');
     const [lines, setLines] = React.useState([]);
     const isDrawing = React.useRef(false);
+    const [baseImg, setBaseImg] = React.useState(null);
+
+    const loadBaseImage = () => {
+        const arr = new Uint8ClampedArray(props.width * props.height * 4);
+        for (let i = 0; i < props.baseArray.length; i++) {
+            arr[i] = props.baseArray[i];
+        }
+        const image = new ImageData(arr, props.width);
+        setBaseImg(image);
+    };
+
+    useEffect(() => {
+        if (props.baseArray) {
+            loadBaseImage();
+        }
+    }, [props.baseArray]);
 
     const handleMouseDown = (e) => {
         isDrawing.current = true;
@@ -43,7 +59,14 @@ const ImageCreate = (props) => {
                 onMouseup={handleMouseUp}
             >
                 <Layer>
-                    <Text text="Just start drawing" x={5} y={30} />
+                    <Text text="" x={5} y={30} />
+                    {baseImg ? (
+                        <Shape
+                            sceneFunc={(context, image) => {
+                                context.putImageData(baseImg, 0, 0);
+                            }}
+                        ></Shape>
+                    ) : null}
                     {lines.map((line, i) => (
                         <Line
                             key={i}
