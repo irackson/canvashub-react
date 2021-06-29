@@ -49,10 +49,10 @@ export const fetchDrawingCreate = async (newDrawing) => {
         body: JSON.stringify(newDrawing),
     });
 
-    const data = await response.json();
+    // const data = await response.json();
 
     return new Promise(function (myResolve) {
-        myResolve(data);
+        myResolve(response);
     });
 };
 
@@ -66,14 +66,14 @@ export const fetchDrawingDelete = async (id) => {
     };
 
     const response = await fetch(`${apiRoute}/drawings/${id}`, requestOptions);
-    const status = await response.status();
+    const status = await response.status;
 
     return new Promise(function (myResolve) {
         myResolve(status);
     });
 };
 
-export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
+/* export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
     const response = await fetch(`${apiRoute}/drawings/${id}`, {
         method: 'PATCH',
         headers: {
@@ -87,9 +87,9 @@ export const fetchDrawingUpdateProperties = async (id, updatedDrawing) => {
     return new Promise(function (myResolve) {
         myResolve(data);
     });
-};
+}; */
 
-export const fetchDrawingCheckOut = async (id) => {
+/* export const fetchDrawingCheckOut = async (id) => {
     const response = await fetch(`${apiRoute}/drawings/${id}`, {
         method: 'PATCH',
         headers: {
@@ -98,7 +98,7 @@ export const fetchDrawingCheckOut = async (id) => {
         body: JSON.stringify({ checked_out: true }),
     });
 
-    const status = await response.status();
+    const status = await response.status;
 
     return new Promise(function (myResolve) {
         myResolve(status);
@@ -114,28 +114,26 @@ export const fetchDrawingCheckIn = async (id) => {
         body: JSON.stringify({ checked_out: false }),
     });
 
-    const status = await response.status();
+    const status = await response.status;
 
     return new Promise(function (myResolve) {
         myResolve(status);
     });
-};
+}; */
 
-export const fetchImageCreate = async (drawingId, clampedArray) => {
-    const newImage = {
-        bytes: '{' + clampedArray.toString() + '}',
-    };
+export const fetchImageCreate = async (drawingId, newCommit) => {
+    /* newCommit = {
+        "bytes": "{123, 123, 123, 123}",
+        "checkout_time": "2021-06-29T20:58:20.887Z"
+    } */
     const response = await fetch(`${apiRoute}/drawings/${drawingId}/images`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newImage),
+        body: JSON.stringify(newCommit),
     });
-
-    const data = await response.json();
-
     return new Promise(function (myResolve) {
-        myResolve(data);
+        myResolve(response);
     });
 };
