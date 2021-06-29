@@ -1,13 +1,38 @@
 import ImageCreate from 'components/ImageCreate';
+import { useState } from 'react';
 
 const DrawingEdit = (props) => {
-    const loaded = () => {
-        const drawing = props.allDrawings.find(
+    const [commitData, setCommitData] = useState(null);
+
+    const isolateDrawing = () => {
+        return props.allDrawings.find(
             (d) => parseInt(d.id) === parseInt(props.match.params.id)
         );
-        const latestVersion = props.latestVersions.find(
-            (v) => parseInt(v?.drawing_id) === parseInt(drawing.id)
+    };
+
+    const isolateVersionFromDrawingID = (id) => {
+        return props.latestVersions.find(
+            (v) => parseInt(v?.drawing_id) === parseInt(id)
         );
+    };
+
+    const commitEdits = async (drawingData) => {
+        const drawing = isolateDrawing();
+        const errorOrObj = await props.createCommit(
+            drawing.id,
+            drawingData,
+            drawing.updated_at
+        );
+        if (errorOrObj !== 409) {
+            props.history.push(`/drawings/${errorOrObj.drawing_id}`);
+        } else {
+            prompt('failed to commit'); // TODO handle failure with fork (may have to send different data with the latest commits by others)
+        }
+    };
+
+    const loaded = () => {
+        const drawing = isolateDrawing();
+        const latestVersion = isolateVersionFromDrawingID(drawing.id);
 
         return (
             <div>
@@ -25,18 +50,12 @@ const DrawingEdit = (props) => {
                         height: drawing.height,
                     }}
                 >
-                    {latestVersion ? (
-                        <ImageCreate
-                            width={parseInt(drawing.width)}
-                            height={parseInt(drawing.height)}
-                            baseArray={latestVersion.bytes}
-                        ></ImageCreate>
-                    ) : (
-                        <ImageCreate
-                            width={parseInt(drawing.width)}
-                            height={parseInt(drawing.height)}
-                        ></ImageCreate>
-                    )}
+                    <ImageCreate
+                        width={parseInt(drawing.width)}
+                        height={parseInt(drawing.height)}
+                        baseArray={latestVersion?.bytes}
+                        commitEdits={commitEdits}
+                    ></ImageCreate>
                 </div>
             </div>
         );

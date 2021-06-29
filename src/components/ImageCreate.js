@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Line, Text, Shape } from 'react-konva';
 
@@ -6,6 +6,7 @@ const ImageCreate = (props) => {
     const [tool, setTool] = React.useState('pen');
     const [lines, setLines] = React.useState([]);
     const isDrawing = React.useRef(false);
+    const stageRef = React.useRef(null);
     const [baseImg, setBaseImg] = React.useState(null);
 
     const loadBaseImage = () => {
@@ -21,6 +22,7 @@ const ImageCreate = (props) => {
         if (props.baseArray) {
             loadBaseImage();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.baseArray]);
 
     const handleMouseDown = (e) => {
@@ -49,50 +51,64 @@ const ImageCreate = (props) => {
         isDrawing.current = false;
     };
 
+    const submitEdits = (e) => {
+        e.preventDefault();
+        props.commitEdits(
+            stageRef.current
+                .toCanvas()
+                .getContext('2d')
+                .getImageData(0, 0, props.width, props.height).data
+        );
+    };
+
     return (
         <div>
-            <Stage
-                width={props.width}
-                height={props.height}
-                onMouseDown={handleMouseDown}
-                onMousemove={handleMouseMove}
-                onMouseup={handleMouseUp}
-            >
-                <Layer>
-                    <Text text="" x={5} y={30} />
-                    {baseImg ? (
-                        <Shape
-                            sceneFunc={(context, image) => {
-                                context.putImageData(baseImg, 0, 0);
-                            }}
-                        ></Shape>
-                    ) : null}
-                    {lines.map((line, i) => (
-                        <Line
-                            key={i}
-                            points={line.points}
-                            stroke="#df4b26"
-                            strokeWidth={5}
-                            tension={0.5}
-                            lineCap="round"
-                            globalCompositeOperation={
-                                line.tool === 'eraser'
-                                    ? 'destination-out'
-                                    : 'source-over'
-                            }
-                        />
-                    ))}
-                </Layer>
-            </Stage>
-            <select
-                value={tool}
-                onChange={(e) => {
-                    setTool(e.target.value);
-                }}
-            >
-                <option value="pen">Pen</option>
-                <option value="eraser">Eraser</option>
-            </select>
+            <Fragment>
+                <Stage
+                    ref={stageRef}
+                    width={props.width}
+                    height={props.height}
+                    onMouseDown={handleMouseDown}
+                    onMousemove={handleMouseMove}
+                    onMouseup={handleMouseUp}
+                >
+                    <Layer>
+                        <Text text="" x={5} y={30} />
+                        {baseImg ? (
+                            <Shape
+                                sceneFunc={(context, image) => {
+                                    context.putImageData(baseImg, 0, 0);
+                                }}
+                            ></Shape>
+                        ) : null}
+                        {lines.map((line, i) => (
+                            <Line
+                                key={i}
+                                points={line.points}
+                                stroke="#df4b26"
+                                strokeWidth={5}
+                                tension={0.5}
+                                lineCap="round"
+                                globalCompositeOperation={
+                                    line.tool === 'eraser'
+                                        ? 'destination-out'
+                                        : 'source-over'
+                                }
+                            />
+                        ))}
+                    </Layer>
+                </Stage>
+                <select
+                    value={tool}
+                    onChange={(e) => {
+                        setTool(e.target.value);
+                    }}
+                >
+                    <option value="pen">Pen</option>
+                    <option value="eraser">Eraser</option>
+                </select>
+            </Fragment>
+            <button onClick={(e) => submitEdits(e)}>Commit Edits</button>
         </div>
     );
 };

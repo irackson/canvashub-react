@@ -121,21 +121,19 @@ export const fetchDrawingCheckIn = async (id) => {
     });
 }; */
 
-export const fetchImageCreate = async (drawingId, clampedArray) => {
-    const newImage = {
-        bytes: '{' + clampedArray.toString() + '}',
-    };
+export const fetchImageCreate = async (drawingId, newCommit) => {
+    /* newCommit = {
+        "bytes": "{123, 123, 123, 123}",
+        "checkout_time": "2021-06-29T20:58:20.887Z"
+    } */
     const response = await fetch(`${apiRoute}/drawings/${drawingId}/images`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newImage),
+        body: JSON.stringify(newCommit),
     });
-
-    const data = await response.json();
-
     return new Promise(function (myResolve) {
-        myResolve(data);
+        myResolve(response);
     });
 };

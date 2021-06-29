@@ -38,7 +38,10 @@ export default class SlickGoTo extends React.Component {
                             type="text/css"
                             href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
                         />
-                        <p>Commit #: {this.state.slideIndex + 1} </p>
+                        <p>
+                            Commit #:{' '}
+                            {this.props.images.length - this.state.slideIndex}{' '}
+                        </p>
                         <input
                             onChange={(e) =>
                                 this.slider.slickGoTo(e.target.value)
@@ -52,7 +55,7 @@ export default class SlickGoTo extends React.Component {
                             ref={(slider) => (this.slider = slider)}
                             {...settings}
                         >
-                            {this.props.images.map((image, i) => (
+                            {this.props.images.reverse().map((image, i) => (
                                 <div key={image.id}>
                                     <Canvas
                                         key={i}

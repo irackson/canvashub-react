@@ -10,6 +10,7 @@ import {
     fetchDrawingsIndex,
     fetchDrawingDelete,
     fetchDrawingCreate,
+    fetchImageCreate,
 } from 'utils/api';
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -48,6 +49,25 @@ export default function Main(props) {
         } else {
             return new Promise(function (myResolve) {
                 myResolve(status);
+            });
+        }
+    };
+
+    const createCommit = async (drawingId, clampedArray, checkoutTime) => {
+        const newCommit = {
+            bytes: '{' + clampedArray.toString() + '}',
+            checkout_time: checkoutTime,
+        };
+        const response = await fetchImageCreate(drawingId, newCommit);
+        if (response.status === 201) {
+            getIndexData();
+            const obj = await response.json();
+            return new Promise(function (myResolve) {
+                myResolve(obj);
+            });
+        } else {
+            return new Promise(function (myResolve) {
+                myResolve(response.status);
             });
         }
     };
@@ -94,6 +114,7 @@ export default function Main(props) {
                                 isLoaded={indexData.isLoaded}
                                 allDrawings={indexData.all_drawings}
                                 latestVersions={indexData.latest_versions}
+                                createCommit={createCommit}
                             />
                         )}
                     ></Route>
