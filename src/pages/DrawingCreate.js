@@ -35,14 +35,18 @@ const DrawingCreate = (props) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmission = (e) => {
+    const handleSubmission = async (e) => {
         e.preventDefault();
-        props.createRepo({
+        const errorOrObj = await props.createRepo({
             ...formData,
             width: dimensions.width,
             height: dimensions.height,
         });
-        props.history.push('/drawings');
+        if (errorOrObj !== 400) {
+            props.history.push(`/drawings/${errorOrObj.id}`);
+        } else {
+            prompt('failed to create');
+        }
     };
 
     return (

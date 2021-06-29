@@ -38,12 +38,19 @@ export default function Main(props) {
         formattedNewRepo.height = parseInt(formattedNewRepo.height);
         formattedNewRepo.width = parseInt(formattedNewRepo.width);
         const response = await fetchDrawingCreate(formattedNewRepo);
-        if (response.status !== 422) {
+        const status = await response.status;
+        if (status !== 400) {
             getIndexData();
+            const newRepo = await response.json();
+            console.log(newRepo);
+            return new Promise(function (myResolve) {
+                myResolve(newRepo);
+            });
+        } else {
+            return new Promise(function (myResolve) {
+                myResolve(status);
+            });
         }
-        return new Promise(function (myResolve) {
-            myResolve(response);
-        });
     };
 
     useEffect(() => {

@@ -49,10 +49,10 @@ export const fetchDrawingCreate = async (newDrawing) => {
         body: JSON.stringify(newDrawing),
     });
 
-    const data = await response.json();
+    // const data = await response.json();
 
     return new Promise(function (myResolve) {
-        myResolve(data);
+        myResolve(response);
     });
 };
 
