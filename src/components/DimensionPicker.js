@@ -26,10 +26,7 @@ const DimensionPicker = (props) => {
             height={props.startingHeight}
             // draggableOpts={Object}
             minConstraints={[100, 100]}
-            maxConstraints={[
-                props.startingWidth * 2 + 100,
-                props.startingHeight * 2 + 100,
-            ]}
+            maxConstraints={[props.maxWidth, props.maxHeight]}
             onResize={(event) => updateDimensions(event)}
         >
             <span>

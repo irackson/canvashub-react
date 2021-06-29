@@ -18,7 +18,6 @@ const DrawingShow = (props) => {
     };
 
     const getRemovableStatus = async (drawing) => {
-        console.log(new Date() - new Date(drawing.updated_at));
         if (
             drawing.images.length <= parseInt(MIN_NUM) ||
             (drawing.images.length > parseInt(MIN_NUM) &&

@@ -6,7 +6,11 @@ import DrawingCreate from 'pages/DrawingCreate';
 import DrawingShow from 'pages/DrawingShow';
 import DrawingEdit from 'pages/DrawingEdit';
 import Home from 'pages/Home';
-import { fetchDrawingsIndex, fetchDrawingDelete } from 'utils/api';
+import {
+    fetchDrawingsIndex,
+    fetchDrawingDelete,
+    fetchDrawingCreate,
+} from 'utils/api';
 import { useEffect, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -18,12 +22,27 @@ export default function Main(props) {
 
     const deleteRepo = async (id) => {
         const status = await fetchDrawingDelete(id);
-        console.log('status: ', status);
         if (status !== 409) {
             getIndexData();
         }
         return new Promise(function (myResolve) {
             myResolve(status);
+        });
+    };
+
+    const createRepo = async (newRepo) => {
+        const formattedNewRepo = { ...newRepo };
+        if (formattedNewRepo.creator === '') {
+            formattedNewRepo.creator = 'anon';
+        }
+        formattedNewRepo.height = parseInt(formattedNewRepo.height);
+        formattedNewRepo.width = parseInt(formattedNewRepo.width);
+        const response = await fetchDrawingCreate(formattedNewRepo);
+        if (response.status !== 422) {
+            getIndexData();
+        }
+        return new Promise(function (myResolve) {
+            myResolve(response);
         });
     };
 
@@ -56,7 +75,9 @@ export default function Main(props) {
                     ></Route>
                     <Route
                         path="/drawings/create"
-                        render={(rp) => <DrawingCreate {...rp} />}
+                        render={(rp) => (
+                            <DrawingCreate {...rp} createRepo={createRepo} />
+                        )}
                     ></Route>
                     <Route
                         path="/drawings/:id/edit"
