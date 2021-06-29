@@ -5,6 +5,7 @@ const DrawingIndex = (props) => {
     const loaded = () => {
         return (
             <div>
+                <h2>Browse Public Repositories</h2>
                 {props.allDrawings.map((drawing) => (
                     <DrawingPreview
                         key={drawing.id}

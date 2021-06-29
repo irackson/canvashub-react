@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const DrawingPreview = ({ drawing, image }) => {
     return (
         <div>
-            <h2>Browse Public Repositories</h2>
             <h3>
                 <Link to={`/drawings/${drawing.id}`}>{drawing.title}</Link>
             </h3>

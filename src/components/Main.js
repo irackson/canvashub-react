@@ -42,7 +42,6 @@ export default function Main(props) {
         if (status !== 400) {
             getIndexData();
             const newRepo = await response.json();
-            console.log(newRepo);
             return new Promise(function (myResolve) {
                 myResolve(newRepo);
             });
