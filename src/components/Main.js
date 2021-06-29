@@ -88,7 +88,14 @@ export default function Main(props) {
                     <Route
                         path="/drawings/:id/edit"
                         exact
-                        render={(rp) => <DrawingEdit {...rp} />}
+                        render={(rp) => (
+                            <DrawingEdit
+                                {...rp}
+                                isLoaded={indexData.isLoaded}
+                                allDrawings={indexData.all_drawings}
+                                latestVersions={indexData.latest_versions}
+                            />
+                        )}
                     ></Route>
                     <Route
                         path="/drawings/:id"
