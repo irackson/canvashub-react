@@ -8,3 +8,10 @@
 ## Backend URLS
 
 -   <https://canvashub-api.herokuapp.com/>
+
+TODO:
+
+-   Repo Create -> redirect to edit
+-   Image create --> redirect to show
+-   Fork when can't post image
+-
