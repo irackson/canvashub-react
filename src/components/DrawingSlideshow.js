@@ -54,10 +54,10 @@ export default class SlickGoTo extends React.Component {
                         <Slider
                             ref={(slider) => (this.slider = slider)}
                             {...settings}
-                            style={{
-                                width: `${this.props.width}px`,
-                                height: `${this.props.height}px`,
-                            }}
+                            // style={{
+                            //     width: `${this.props.width}px`,
+                            //     height: `${this.props.height}px`,
+                            // }}
                         >
                             {this.props.images.reverse().map((image, i) => (
                                 <div key={image.id}>
@@ -70,17 +70,16 @@ export default class SlickGoTo extends React.Component {
                                         width={this.props.width}
                                     ></Canvas> */}
                                     <img
-                                        width={this.props.width}
-                                        height={this.props.height}
                                         src={image.data_url}
                                         alt={image.id}
+                                        style={{ margin: 'auto' }}
                                     ></img>
-                                    <h6>
+                                    {/* <h6>
                                         Commit author: {image.commit_author}
                                     </h6>
                                     <h5>
                                         Commit message: {image.commit_message}
-                                    </h5>
+                                    </h5> */}
                                 </div>
                             ))}
                         </Slider>
