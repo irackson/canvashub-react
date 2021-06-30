@@ -53,9 +53,17 @@ export default function Main(props) {
         }
     };
 
-    const createCommit = async (drawingId, clampedArray, checkoutTime) => {
+    const createCommit = async (
+        drawingId,
+        dataUrl,
+        commitMessage,
+        commitAuthor,
+        checkoutTime
+    ) => {
         const newCommit = {
-            bytes: '{' + clampedArray.toString() + '}',
+            data_url: dataUrl,
+            commit_message: commitMessage,
+            commit_author: commitAuthor,
             checkout_time: checkoutTime,
         };
         const response = await fetchImageCreate(drawingId, newCommit);

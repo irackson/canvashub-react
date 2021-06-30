@@ -72,15 +72,12 @@ const DrawingShow = (props) => {
                                 </button>
                             </h6>
                             {!removable ? (
-                                <h6>
-                                    <em>
-                                        repos with more than than {MIN_NUM}{' '}
-                                        commits, or those with more than{' '}
-                                        {MIN_NUM} that have been updated within
-                                        the last{' '}
-                                        {Math.floor(MIN_TIME / 60 / 1000)}{' '}
-                                        minutes cannot be deleted
-                                    </em>
+                                <h6 className="drawing-show__no-delete-message">
+                                    repos with more than than {MIN_NUM} commits,
+                                    or those with more than {MIN_NUM} that have
+                                    been updated within the last{' '}
+                                    {Math.floor(MIN_TIME / 60 / 1000)} minutes
+                                    cannot be deleted
                                 </h6>
                             ) : null}
                         </div>
@@ -115,14 +112,12 @@ const DrawingShow = (props) => {
                             </button>
                         </h6>
                         {!removable ? (
-                            <h6>
-                                <em>
-                                    repos with more than than {MIN_NUM} commits,
-                                    or those with more than {MIN_NUM} that have
-                                    been updated within the last{' '}
-                                    {Math.floor(MIN_TIME / 60 / 1000)} minutes
-                                    cannot be deleted
-                                </em>
+                            <h6 className="drawing-show__no-delete-message">
+                                repos with more than than {MIN_NUM} commits, or
+                                those with more than {MIN_NUM} that have been
+                                updated within the last{' '}
+                                {Math.floor(MIN_TIME / 60 / 1000)} minutes
+                                cannot be deleted
                             </h6>
                         ) : null}
                         <h6>

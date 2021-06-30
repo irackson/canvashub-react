@@ -2,7 +2,10 @@ import ImageCreate from 'components/ImageCreate';
 import { useState } from 'react';
 
 const DrawingEdit = (props) => {
-    const [commitData, setCommitData] = useState(null);
+    const [commitText, setCommitText] = useState({
+        commitMessage: '',
+        commitAuthor: '',
+    });
 
     const isolateDrawing = () => {
         return props.allDrawings.find(
@@ -16,11 +19,13 @@ const DrawingEdit = (props) => {
         );
     };
 
-    const commitEdits = async (drawingData) => {
+    const commitEdits = async (newImageDataUrl) => {
         const drawing = isolateDrawing();
         const errorOrObj = await props.createCommit(
             drawing.id,
-            drawingData,
+            newImageDataUrl,
+            'commitMessage',
+            'commitAuthor',
             drawing.updated_at
         );
         if (errorOrObj !== 409) {
@@ -53,7 +58,7 @@ const DrawingEdit = (props) => {
                     <ImageCreate
                         width={parseInt(drawing.width)}
                         height={parseInt(drawing.height)}
-                        baseArray={latestVersion?.bytes}
+                        baseDataUrl={latestVersion?.data_url}
                         commitEdits={commitEdits}
                     ></ImageCreate>
                 </div>
