@@ -9,11 +9,17 @@ const DrawingPreview = ({ drawing, image }) => {
             </h3>
             <h4>By {drawing.creator}</h4>
             {image ? (
-                <Canvas
-                    bytes={image.bytes}
-                    height={drawing.height}
+                // <Canvas
+                //     dataUrl={image.data_url}
+                //     height={drawing.height}
+                //     width={drawing.width}
+                // ></Canvas>
+                <img
                     width={drawing.width}
-                ></Canvas>
+                    height={drawing.height}
+                    src={image.data_url}
+                    alt={image.id}
+                ></img>
             ) : (
                 <div>
                     <h5>empty drawing repo (no commits)</h5>

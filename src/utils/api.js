@@ -123,8 +123,9 @@ export const fetchDrawingCheckIn = async (id) => {
 
 export const fetchImageCreate = async (drawingId, newCommit) => {
     /* newCommit = {
-        "bytes": "{123, 123, 123, 123}",
-        "checkout_time": "2021-06-29T20:58:20.887Z"
+        "data_url": "data:image/png;base64,iVBORw",
+        "commit_message": "..."
+        "commit_author": "..."
     } */
     const response = await fetch(`${apiRoute}/drawings/${drawingId}/images`, {
         method: 'POST',

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
 import { Stage, Layer, Line, Text, Shape } from 'react-konva';
 
 const ImageCreate = (props) => {
@@ -10,20 +10,23 @@ const ImageCreate = (props) => {
     const [baseImg, setBaseImg] = React.useState(null);
 
     const loadBaseImage = () => {
-        const arr = new Uint8ClampedArray(props.width * props.height * 4);
-        for (let i = 0; i < props.baseArray.length; i++) {
-            arr[i] = props.baseArray[i];
-        }
-        const image = new ImageData(arr, props.width);
-        setBaseImg(image);
+        // const arr = new Uint8ClampedArray(props.width * props.height * 4);
+        // for (let i = 0; i < props.baseArray.length; i++) {
+        //     arr[i] = props.baseArray[i];
+        // }
+        // const image = new ImageData(arr, props.width);
+        // setBaseImg(image);
+        const img = new Image(props.width, props.height);
+        img.src = props.baseDataUrl;
+        setBaseImg(img);
     };
 
     useEffect(() => {
-        if (props.baseArray) {
+        if (props.baseDataUrl) {
             loadBaseImage();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.baseArray]);
+    }, [props.baseDataUrl]);
 
     const handleMouseDown = (e) => {
         isDrawing.current = true;
@@ -53,11 +56,27 @@ const ImageCreate = (props) => {
 
     const submitEdits = (e) => {
         e.preventDefault();
+        /* console.log(
+            stageRef.current.toDataURL({
+                width: parseInt(props.width),
+                height: parseInt(props.height),
+                mimeType: 'image/png',
+                pixelRatio: 4,
+            })
+        ); */
+        // props.commitEdits(
+        //     stageRef.current
+        //         .toCanvas()
+        //         .getContext('2d')
+        //         .getImageData(0, 0, props.width, props.height).data
+        // );
         props.commitEdits(
-            stageRef.current
-                .toCanvas()
-                .getContext('2d')
-                .getImageData(0, 0, props.width, props.height).data
+            stageRef.current.toDataURL({
+                width: parseInt(props.width),
+                height: parseInt(props.height),
+                mimeType: 'image/png',
+                pixelRatio: 1,
+            })
         );
     };
 
@@ -77,7 +96,8 @@ const ImageCreate = (props) => {
                         {baseImg ? (
                             <Shape
                                 sceneFunc={(context, image) => {
-                                    context.putImageData(baseImg, 0, 0);
+                                    // context.putImageData(baseImg, 0, 0);
+                                    context.drawImage(baseImg, 0, 0);
                                 }}
                             ></Shape>
                         ) : null}
