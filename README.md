@@ -15,3 +15,5 @@ TODO:
 -   Fork when can't post image
 
 -
+
+Challenges --> loading time and refactoring from array to dataURL
