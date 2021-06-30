@@ -72,6 +72,8 @@ export default class SlickGoTo extends React.Component {
                                     <img
                                         src={image.data_url}
                                         alt={image.id}
+                                        height={this.props.height}
+                                        width={this.props.width}
                                         style={{ margin: 'auto' }}
                                     ></img>
                                     {/* <h6>
