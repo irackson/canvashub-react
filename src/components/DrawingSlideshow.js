@@ -74,7 +74,7 @@ export default class SlickGoTo extends React.Component {
                                         alt={image.id}
                                         height={this.props.height}
                                         width={this.props.width}
-                                        style={{ margin: 'auto' }}
+                                        // style={{ margin: 'auto' }}
                                     ></img>
                                     {/* <h6>
                                         Commit author: {image.commit_author}
