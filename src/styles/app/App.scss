@@ -12,6 +12,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
+    padding: 1rem;
 }
 
 code {
@@ -109,5 +110,11 @@ code {
 }
 
 footer {
+    margin-top: 20px;
     text-align: right;
+}
+
+.drawing-preview {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

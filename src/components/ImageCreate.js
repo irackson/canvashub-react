@@ -116,6 +116,9 @@ const ImageCreate = (props) => {
                     onMouseDown={handleMouseDown}
                     onMousemove={handleMouseMove}
                     onMouseup={handleMouseUp}
+                    onTouchStart={handleMouseDown}
+                    onTouchMove={handleMouseMove}
+                    onTouchEnd={handleMouseUp}
                 >
                     <Layer>
                         <Text text="" x={5} y={30} />

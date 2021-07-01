@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const DrawingPreview = ({ drawing, image }) => {
     return (
-        <div>
-            <h3>
+        <div className="drawing-preview">
+            <h2>
                 <Link to={`/drawings/${drawing.id}`}>{drawing.title}</Link>
-            </h3>
-            <h4>By {drawing.creator}</h4>
+            </h2>
+            <h3>By {drawing.creator}</h3>
             {image ? (
                 // <Canvas
                 //     dataUrl={image.data_url}

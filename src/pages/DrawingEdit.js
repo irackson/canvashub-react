@@ -42,10 +42,8 @@ const DrawingEdit = (props) => {
         return (
             <div>
                 <div>
-                    <h4>title: {drawing.title}</h4>
-                    <h4>creator: {drawing.creator}</h4>
-                    <h4>width: {drawing.width}</h4>
-                    <h4>height: {drawing.height}</h4>
+                    <h2>title: {drawing.title}</h2>
+                    <h3>creator: {drawing.creator}</h3>
                 </div>
                 <div
                     className="image-editor__container"
