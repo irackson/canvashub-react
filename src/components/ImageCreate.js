@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState, useRef } from 'react';
 import { SketchPicker } from 'react-color';
 import colorString from 'color-string';
 import { Stage, Layer, Line, Text, Shape } from 'react-konva';
+import { isMobile } from 'react-device-detect';
 
 const initialColor = 'rgba(204, 43, 43, 100)';
 const initialWidth = 5;
@@ -107,7 +108,13 @@ const ImageCreate = (props) => {
     };
 
     return (
-        <div>
+        <div
+            style={
+                isDrawing.current && isMobile
+                    ? { overflow: 'clop' }
+                    : { overflow: 'visible' }
+            }
+        >
             <Fragment>
                 <Stage
                     ref={stageRef}
