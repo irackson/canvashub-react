@@ -1,13 +1,25 @@
-import React, { Fragment, useEffect } from 'react';
-// import { render } from 'react-dom';
+import { Fragment, useEffect, useState, useRef } from 'react';
+import { SketchPicker } from 'react-color';
+import colorString from 'color-string';
 import { Stage, Layer, Line, Text, Shape } from 'react-konva';
 
+const initialColor = 'rgba(204, 43, 43, 100)';
+
 const ImageCreate = (props) => {
-    const [tool, setTool] = React.useState('pen');
-    const [lines, setLines] = React.useState([]);
-    const isDrawing = React.useRef(false);
-    const stageRef = React.useRef(null);
-    const [baseImg, setBaseImg] = React.useState(null);
+    const [tool, setTool] = useState('pen');
+    const [lines, setLines] = useState([]);
+    const isDrawing = useRef(false);
+    const stageRef = useRef(null);
+    const [baseImg, setBaseImg] = useState(null);
+
+    //* custom drawing tools
+    const [stroke, setStroke] = useState({ rgbaString: initialColor });
+
+    const changeStroke = (color) => {
+        const { a, b, g, r } = color.rgb;
+        const newColorString = colorString.to.rgb([r, g, b, a]);
+        setStroke({ ...color, rgbaString: newColorString });
+    };
 
     const loadBaseImage = () => {
         // const arr = new Uint8ClampedArray(props.width * props.height * 4);
@@ -31,7 +43,7 @@ const ImageCreate = (props) => {
     const handleMouseDown = (e) => {
         isDrawing.current = true;
         const pos = e.target.getStage().getPointerPosition();
-        setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+        setLines([...lines, { tool, points: [pos.x, pos.y], stroke }]);
     };
 
     const handleMouseMove = (e) => {
@@ -56,14 +68,6 @@ const ImageCreate = (props) => {
 
     const submitEdits = (e) => {
         e.preventDefault();
-        /* console.log(
-            stageRef.current.toDataURL({
-                width: parseInt(props.width),
-                height: parseInt(props.height),
-                mimeType: 'image/png',
-                pixelRatio: 4,
-            })
-        ); */
         // props.commitEdits(
         //     stageRef.current
         //         .toCanvas()
@@ -105,7 +109,7 @@ const ImageCreate = (props) => {
                             <Line
                                 key={i}
                                 points={line.points}
-                                stroke="#df4b26"
+                                stroke={line.stroke.rgbaString}
                                 strokeWidth={5}
                                 tension={0.5}
                                 lineCap="round"
@@ -128,7 +132,15 @@ const ImageCreate = (props) => {
                     <option value="eraser">Eraser</option>
                 </select>
             </Fragment>
-            <button onClick={(e) => submitEdits(e)}>Commit Edits</button>
+
+            <div>
+                <SketchPicker
+                    color={stroke.rgbaString}
+                    onChangeComplete={changeStroke}
+                    disableAlpha={false}
+                />
+                <button onClick={(e) => submitEdits(e)}>Commit Edits</button>
+            </div>
         </div>
     );
 };
