@@ -19,8 +19,6 @@ const ImageCreate = (props) => {
         rgbaString: initialColor,
         width: initialWidth,
     });
-    const [plusDisabled, setPlusDisabled] = useState(false);
-    // const [minusDisabled, setMinusDisabled] = useState(false);
 
     const changeStrokeColor = (color) => {
         const { a, b, g, r } = color.rgb;
@@ -30,17 +28,11 @@ const ImageCreate = (props) => {
 
     const incrementStrokeWidth = (e) => {
         e.preventDefault();
-        // if (stroke.width > 20) {
-        //     setPlusDisabled(true);
-        // }
         setStroke({ ...stroke, width: stroke.width + 1 });
     };
 
     const decrementStrokeWidth = (e) => {
         e.preventDefault();
-        // if (stroke.width < 2) {
-        //     setMinusDisabled(true);
-        // }
         setStroke({ ...stroke, width: stroke.width - 1 });
     };
 
