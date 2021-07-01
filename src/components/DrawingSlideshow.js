@@ -59,9 +59,12 @@ export default class SlickGoTo extends React.Component {
                             //     height: `${this.props.height}px`,
                             // }}
                         >
-                            {this.props.images.reverse().map((image) => (
-                                <div key={image.id}>
-                                    {/* <Canvas
+                            {this.props.images
+                                .slice(0)
+                                .reverse()
+                                .map((image) => (
+                                    <div key={image.id}>
+                                        {/* <Canvas
                                         key={i}
                                         dataUrl={image.data_url}
                                         commitMessage={image.commit_message}
@@ -69,24 +72,24 @@ export default class SlickGoTo extends React.Component {
                                         height={this.props.height}
                                         width={this.props.width}
                                     ></Canvas> */}
-                                    <img
-                                        src={image.data_url}
-                                        alt={image.id}
-                                        style={{
-                                            display: 'block',
-                                            marginLeft: 'auto',
-                                            marginRight: 'auto',
-                                            // width: '96%',
-                                        }}
-                                    ></img>
-                                    {/* <h6>
+                                        <img
+                                            src={image.data_url}
+                                            alt={image.id}
+                                            style={{
+                                                display: 'block',
+                                                marginLeft: 'auto',
+                                                marginRight: 'auto',
+                                                // width: '96%',
+                                            }}
+                                        ></img>
+                                        {/* <h6>
                                         Commit author: {image.commit_author}
                                     </h6>
                                     <h5>
                                         Commit message: {image.commit_message}
                                     </h5> */}
-                                </div>
-                            ))}
+                                    </div>
+                                ))}
                         </Slider>
                     </div>
                 </div>
