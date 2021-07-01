@@ -4,6 +4,7 @@ import colorString from 'color-string';
 import { Stage, Layer, Line, Text, Shape } from 'react-konva';
 
 const initialColor = 'rgba(204, 43, 43, 100)';
+const initialWidth = 5;
 
 const ImageCreate = (props) => {
     const [tool, setTool] = useState('pen');
@@ -13,12 +14,33 @@ const ImageCreate = (props) => {
     const [baseImg, setBaseImg] = useState(null);
 
     //* custom drawing tools
-    const [stroke, setStroke] = useState({ rgbaString: initialColor });
+    const [stroke, setStroke] = useState({
+        rgbaString: initialColor,
+        width: initialWidth,
+    });
+    const [plusDisabled, setPlusDisabled] = useState(false);
+    // const [minusDisabled, setMinusDisabled] = useState(false);
 
-    const changeStroke = (color) => {
+    const changeStrokeColor = (color) => {
         const { a, b, g, r } = color.rgb;
         const newColorString = colorString.to.rgb([r, g, b, a]);
-        setStroke({ ...color, rgbaString: newColorString });
+        setStroke({ ...color, ...stroke, rgbaString: newColorString });
+    };
+
+    const incrementStrokeWidth = (e) => {
+        e.preventDefault();
+        // if (stroke.width > 20) {
+        //     setPlusDisabled(true);
+        // }
+        setStroke({ ...stroke, width: stroke.width + 1 });
+    };
+
+    const decrementStrokeWidth = (e) => {
+        e.preventDefault();
+        // if (stroke.width < 2) {
+        //     setMinusDisabled(true);
+        // }
+        setStroke({ ...stroke, width: stroke.width - 1 });
     };
 
     const loadBaseImage = () => {
@@ -110,7 +132,7 @@ const ImageCreate = (props) => {
                                 key={i}
                                 points={line.points}
                                 stroke={line.stroke.rgbaString}
-                                strokeWidth={5}
+                                strokeWidth={line.stroke.width}
                                 tension={0.5}
                                 lineCap="round"
                                 globalCompositeOperation={
@@ -134,11 +156,29 @@ const ImageCreate = (props) => {
             </Fragment>
 
             <div>
+                <div>
+                    <button
+                        type="button"
+                        onClick={(e) => incrementStrokeWidth(e)}
+                        disabled={stroke.width < 40 ? false : true}
+                    >
+                        +
+                    </button>
+                    <button
+                        type="button"
+                        onClick={(e) => decrementStrokeWidth(e)}
+                        disabled={stroke.width > 2 ? false : true}
+                    >
+                        -
+                    </button>
+                </div>
                 <SketchPicker
                     color={stroke.rgbaString}
-                    onChangeComplete={changeStroke}
+                    onChangeComplete={changeStrokeColor}
                     disableAlpha={false}
                 />
+            </div>
+            <div>
                 <button onClick={(e) => submitEdits(e)}>Commit Edits</button>
             </div>
         </div>
