@@ -109,11 +109,7 @@ const ImageCreate = (props) => {
 
     return (
         <div
-            style={
-                isDrawing.current && isMobile
-                    ? { overflow: 'clop' }
-                    : { overflow: 'visible' }
-            }
+            style={isDrawing.current && isMobile ? { overflow: 'clip' } : null}
         >
             <Fragment>
                 <Stage
