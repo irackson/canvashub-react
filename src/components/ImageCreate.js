@@ -109,6 +109,7 @@ const ImageCreate = (props) => {
 
     return (
         <div
+            className="image-create"
             style={
                 isDrawing.current && isMobile ? { overflow: 'hidden' } : null
             }
