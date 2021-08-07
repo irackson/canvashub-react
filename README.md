@@ -4,7 +4,7 @@
 
 ### Checkout my walk-through!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hALVCw2WgEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="iframe-container"><iframe src="https://www.youtube-nocookie.com/embed/hALVCw2WgEI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 #### Essential Links
 
