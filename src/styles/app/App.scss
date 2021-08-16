@@ -51,8 +51,10 @@ code {
     }
 
     &__no-delete-message {
-        color: orange;
+        color: red;
+        font-size: larger;
         font-style: italic;
+        font-weight: bold;
         // max-width: 60ch;
         // text-align: center;
         width: 60ch;

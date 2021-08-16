@@ -31,7 +31,7 @@ const DrawingEdit = (props) => {
         if (errorOrObj !== 409) {
             props.history.push(`/drawings/${errorOrObj.drawing_id}`);
         } else {
-            prompt('failed to commit'); // TODO handle failure with fork (may have to send different data with the latest commits by others)
+            alert('failed to commit'); // TODO handle failure with fork (may have to send different data with the latest commits by others)
         }
     };
 

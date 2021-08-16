@@ -45,7 +45,7 @@ const DrawingCreate = (props) => {
         if (errorOrObj !== 400) {
             props.history.push(`/drawings/${errorOrObj.id}`);
         } else {
-            prompt('failed to create');
+            alert('failed to create');
         }
     };
 
